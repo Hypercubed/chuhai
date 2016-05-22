@@ -12,7 +12,8 @@
     "test:browser-run": "browserify ./test/fixtures/assert/slice.js | browser-run",
     "test:testling": "browserify ./test/fixtures/assert/slice.js | testling -x open",
     "test:node": "npm run test:ava && npm run test:tape && npm run test:blue && npm run test:assert",
-    "test:browsers": "npm run test:browser-run && npm run test:testling"
+    "test:browsers": "npm run test:browser-run && npm run test:testling",
+    "version": "chg release -y && git add -A CHANGELOG.md"
   },
   "files": [
     "src"
@@ -24,6 +25,7 @@
     "blue-tape": "^0.2.0",
     "browser-run": "^3.1.0",
     "browserify": "^13.0.1",
+    "chg": "^0.3.2",
     "tape": "^4.5.1",
     "testling": "^1.7.1",
     "xo": "^0.15.1"
