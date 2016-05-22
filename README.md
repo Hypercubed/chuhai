@@ -4,6 +4,8 @@ Test driven benchmarking.
 
 ## Why Chūhai?
 
+TDB
+
 ## Install
 
 ```sh
@@ -14,28 +16,36 @@ npm i --save-dev chuhai
 
 Create a file named bench.js:
 
+**example using node and assert, see below for other setups**
+
 ```js
 var assert = require('assert');
 var suite = require('chuhai');
 
+// starts a new benchmark suite
 suite('array concat', function (s) {
   var arr1 = ['a', 'b', 'c'];
   var arr2 = ['d', 'e', 'f'];
   var arr3 = null;
 
+  // run between each benchmark
   s.cycle(function () {
+    // uses your assertion lib of choice
     assert.deepEqual(arr3, ['a', 'b', 'c', 'd', 'e', 'f']);
     arr3 = null;
   });
 
+  // adds a bench that runs but doesn't get count when comparing to others.
   s.burn('slice', function () {
     arr3 = ['a', 'b', 'c', 'd', 'e', 'f'].slice();
   });
 
+  // adds a bench.
   s.bench('concat', function () {
     arr3 = arr1.concat(arr2);
   });
 
+  // adds a bench.
   s.bench('for loop', function () {
     var i;
     var l1 = arr1.length;
@@ -59,40 +69,47 @@ node bench.js
 
 ## Test runners/Assertion libraries
 
-chuhai is designed to work well with test runners and assertion libraries such as:
+Chūhai is designed to work well with test runners and assertion libraries such as:
 
-- [node-assert](https://nodejs.org/api/assert.html) [example](./test/fixtures/assert)
-- [AVA](https://github.com/avajs/ava) [example](./test/fixtures/ava)
-- [Tape](https://github.com/substack/tape) [example](./test/fixtures/tape)
-- [blue-tape](https://github.com/spion/blue-tape) [example](./test/fixtures/bluetape)
+- [node-assert](https://nodejs.org/api/assert.html) - [example](./test/fixtures/assert)
+- [AVA](https://github.com/avajs/ava) - [example](./test/fixtures/ava)
+- [Tape](https://github.com/substack/tape) - [example](./test/fixtures/tape)
+- [blue-tape](https://github.com/spion/blue-tape) - [example](./test/fixtures/bluetape)
 
-as well as in-browser runners such as (combined with node-assert, Tape, or blue-tape)
+as well as in-browser runners such as (combined with assert, Tape, or blue-tape):
 
 - [testling](https://github.com/substack/testling)
 - [browser-run](https://github.com/juliangruber/browser-run)
 
+**More details coming soon**
+
 ## API
 
 ```js
-suite([title], implementation)
+// creates a benchmark suite
+suite([title: string], implementation: function): promise
 ```
 
-### implementation(s)
+### function implementation(s) {}
 
 ```js
-s.bench(title, implementation)
-```
-
-```js
-s.burn(title, implementation)
-```
-
-```js
-s.cycle(implementation)
+// creates a bench
+s.bench(title: string, implementation: function)
 ```
 
 ```js
-s.set(key, value)
+// creates a burn-in bench
+s.burn(title: string, implementation: function)
+```
+
+```js
+// runs between benchmarks
+s.cycle(implementation: function)
+```
+
+```js
+// sets benchmark/suite options
+s.set(key: string, value: any)
 ```
 
 ## Acknowledgments
