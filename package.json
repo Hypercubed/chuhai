@@ -1,0 +1,71 @@
+{
+  "name": "chuhai",
+  "version": "0.0.0",
+  "description": "Test driven benchmarking.",
+  "main": "index.js",
+  "scripts": {
+    "test": "xo && npm run test:ava",
+    "test:ava": "ava ./test/fixtures/ava/*.js",
+    "test:tape": "tape ./test/fixtures/tape/*.js",
+    "test:blue": "blue-tape ./test/fixtures/bluetape/*.js",
+    "test:assert": "node ./test/fixtures/assert/slice.js && node ./test/fixtures/assert/concat.js",
+    "test:browser-run": "browserify ./test/fixtures/assert/slice.js | browser-run",
+    "test:testling": "browserify ./test/fixtures/assert/slice.js | testling -x open",
+    "test:node": "npm run test:ava && npm run test:tape && npm run test:blue && npm run test:assert",
+    "test:browsers": "npm run test:browser-run && npm run test:testling"
+  },
+  "files": [
+    "src"
+  ],
+  "author": "J. Harshbarger",
+  "license": "MIT",
+  "devDependencies": {
+    "ava": "github:avajs/ava#master",
+    "blue-tape": "^0.2.0",
+    "browser-run": "^3.1.0",
+    "browserify": "^13.0.1",
+    "tape": "^4.5.1",
+    "testling": "^1.7.1",
+    "xo": "^0.15.1"
+  },
+  "xo": {
+    "semicolon": true,
+    "space": 2,
+    "plugins": [],
+    "rules": {
+      "ava/no-ignored-test-files": 0,
+      "ava/test-ended": 0,
+      "ava/use-t-well": 0
+    }
+  },
+  "dependencies": {
+    "benchmark": "^2.1.0",
+    "bluebird": "^3.4.0",
+    "lodash": "^4.12.0",
+    "microtime": "^2.1.1"
+  },
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Hypercubed/chuhai.git"
+  },
+  "keywords": [
+    "benchmark",
+    "bench",
+    "performance",
+    "speed",
+    "test",
+    "tape",
+    "ava",
+    "tap",
+    "assert",
+    "promise",
+    "futuristic"
+  ],
+  "bugs": {
+    "url": "https://github.com/Hypercubed/chuhai/issues"
+  },
+  "homepage": "https://github.com/Hypercubed/chuhai#readme"
+}

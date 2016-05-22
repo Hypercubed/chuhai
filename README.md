@@ -1,0 +1,112 @@
+# Chūhai
+
+Test driven benchmarking.
+
+## Why Chūhai?
+
+## Install
+
+```sh
+npm i --save-dev chuhai
+```
+
+## Usage
+
+Create a file named bench.js:
+
+```js
+var assert = require('assert');
+var suite = require('chuhai');
+
+suite('array concat', function (s) {
+  var arr1 = ['a', 'b', 'c'];
+  var arr2 = ['d', 'e', 'f'];
+  var arr3 = null;
+
+  s.cycle(function () {
+    assert.deepEqual(arr3, ['a', 'b', 'c', 'd', 'e', 'f']);
+    arr3 = null;
+  });
+
+  s.burn('slice', function () {
+    arr3 = ['a', 'b', 'c', 'd', 'e', 'f'].slice();
+  });
+
+  s.bench('concat', function () {
+    arr3 = arr1.concat(arr2);
+  });
+
+  s.bench('for loop', function () {
+    var i;
+    var l1 = arr1.length;
+    var l2 = arr2.length;
+    arr3 = Array(l1 + l2);
+    for (i = 0; i < l1; i++) {
+      arr3[i] = arr1[i];
+    }
+    for (var i2 = 0; i2 < l2; i2++) {
+      arr3[i + i2] = arr2[i2];
+    }
+  });
+});
+```
+
+Run using node (or babel-node or tape, see below)
+
+```sh
+node bench.js
+```
+
+## Test runners/Assertion libraries
+
+chuhai is designed to work well with test runners and assertion libraries such as:
+
+- [node-assert](https://nodejs.org/api/assert.html) [example](./test/fixtures/assert)
+- [AVA](https://github.com/avajs/ava) [example](./test/fixtures/ava)
+- [Tape](https://github.com/substack/tape) [example](./test/fixtures/tape)
+- [blue-tape](https://github.com/spion/blue-tape) [example](./test/fixtures/bluetape)
+
+as well as in-browser runners such as (combined with node-assert, Tape, or blue-tape)
+
+- [testling](https://github.com/substack/testling)
+- [browser-run](https://github.com/juliangruber/browser-run)
+
+## API
+
+```js
+suite([title], implementation)
+```
+
+### implementation(s)
+
+```js
+s.bench(title, implementation)
+```
+
+```js
+s.burn(title, implementation)
+```
+
+```js
+s.cycle(implementation)
+```
+
+```js
+s.set(key, value)
+```
+
+## Acknowledgments
+
+[matcha](https://github.com/logicalparadox/matcha) inspired the tool.  [AVA](https://github.com/avajs/ava) and [TAPE](https://github.com/substack/tape) inspired the syntax.  [benchmark.js](https://github.com/bestiejs/benchmark.js) made it possible.
+
+## License
+
+[MIT License](http://en.wikipedia.org/wiki/MIT_License)
+
+Copyright (c) 2016 Jayson Harshbarger
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the "Software"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
