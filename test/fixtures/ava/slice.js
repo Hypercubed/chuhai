@@ -54,7 +54,7 @@ test('array slice - without asserts', () => {
   });
 });
 
-/* test('array slice - fail', t => {
+test.failing('array slice - demonstrate a bug', t => {
   return suite('array slice', s => {
     const arr = [1, 2, 3, 4, 5, 6];
     var args = null;
@@ -80,4 +80,4 @@ test('array slice - without asserts', () => {
       }
     });
   });
-}); */
+});

@@ -8,7 +8,7 @@ var benchmark = require('benchmark');
 if (typeof window !== 'undefined') {
   var _ = require('lodash');
   var process = require('process');
-  benchmark = benchmark.runInContext({_, process});
+  benchmark = benchmark.runInContext({_: _, process: process});
   window.Benchmark = benchmark;
 }
 

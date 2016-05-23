@@ -4,13 +4,13 @@
   "description": "Test driven benchmarking.",
   "main": "index.js",
   "scripts": {
-    "test": "xo && npm run test:ava",
+    "test": "xo && ava",
     "test:ava": "ava ./test/fixtures/ava/*.js",
     "test:tape": "tape ./test/fixtures/tape/*.js",
     "test:blue": "blue-tape ./test/fixtures/bluetape/*.js",
     "test:assert": "node ./test/fixtures/assert/slice.js && node ./test/fixtures/assert/concat.js",
-    "test:browser-run": "browserify ./test/fixtures/assert/slice.js | browser-run",
-    "test:testling": "browserify ./test/fixtures/assert/slice.js | testling -x open",
+    "test:browser-run": "browserify ./test/fixtures/tape/slice.js | browser-run",
+    "test:testling": "browserify ./test/fixtures/tape/slice.js | testling -x open",
     "test:node": "npm run test:ava && npm run test:tape && npm run test:blue && npm run test:assert",
     "test:browsers": "npm run test:browser-run && npm run test:testling",
     "version": "chg release -y && git add -A CHANGELOG.md"
@@ -26,18 +26,23 @@
     "browser-run": "^3.1.0",
     "browserify": "^13.0.1",
     "chg": "^0.3.2",
+    "nixt": "^0.5.0",
+    "phantomjs": "^2.1.7",
     "tape": "^4.5.1",
     "testling": "^1.7.1",
-    "xo": "^0.15.1"
+    "xo": "^0.15.1",
+    "zuul": "^3.10.1"
   },
   "xo": {
     "semicolon": true,
     "space": 2,
     "plugins": [],
     "rules": {
+      "ava/no-skip-test": 0,
       "ava/no-ignored-test-files": 0,
       "ava/test-ended": 0,
-      "ava/use-t-well": 0
+      "ava/use-t-well": 0,
+      "ava/no-unknown-modifiers": 0
     }
   },
   "dependencies": {

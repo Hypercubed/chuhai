@@ -22,7 +22,8 @@ module.exports = function (suite) {
         return d.options.burn !== true;
       })
       .filter('fastest')
-      .map('name');
+      .map('name')
+      .join(', ');
 
     console.log('*Fastest is __' + fastest + '__*');
   }

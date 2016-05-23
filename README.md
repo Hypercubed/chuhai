@@ -4,7 +4,13 @@ Test driven benchmarking.
 
 ## Why Chūhai?
 
-TDB
+What's more useless than micro-benchmarks micro-optimization?  Micro-benchmarks without tests to ensure they are doing what you think they are doing.  I've seen it more that once.  I've done it many times myself.  Chūhai is my attempt to fix that by combining testing and benchmarks.
+
+## Features
+
+* Runs alongside multiple assertion libraries and test runners: [node-assert](https://nodejs.org/api/assert.html), [AVA](https://github.com/avajs/ava), [Tape](https://github.com/substack/tape), [blue-tape](https://github.com/spion/blue-tape).
+* Runs in the browser using [browserify](https://github.com/substack/node-browserify), [testling](https://github.com/substack/testling), and  [browser-run](https://github.com/juliangruber/browser-run).
+* more...
 
 ## Install
 
@@ -35,7 +41,7 @@ suite('array concat', function (s) {
     arr3 = null;
   });
 
-  // adds a bench that runs but doesn't get count when comparing to others.
+  // adds a bench that runs but doesn't get counted when comparing results to others.
   s.burn('slice', function () {
     arr3 = ['a', 'b', 'c', 'd', 'e', 'f'].slice();
   });
@@ -76,34 +82,34 @@ Chūhai is designed to work well with test runners and assertion libraries such 
 - [Tape](https://github.com/substack/tape) - [example](./test/fixtures/tape)
 - [blue-tape](https://github.com/spion/blue-tape) - [example](./test/fixtures/bluetape)
 
-as well as in-browser runners such as (combined with assert, Tape, or blue-tape):
+as well as in-browser runners such as (combined with  [browserify](https://github.com/substack/node-browserify) and node-assert, Tape, or blue-tape):
 
-- [testling](https://github.com/substack/testling)
-- [browser-run](https://github.com/juliangruber/browser-run)
+- [testling](https://github.com/substack/testling) - [example](https://github.com/Hypercubed/chuhai/blob/master/package.json#L12)
+- [browser-run](https://github.com/juliangruber/browser-run) - [example](https://github.com/Hypercubed/chuhai/blob/master/package.json#L13)
 
 **More details coming soon**
 
 ## API
 
 ```js
-// creates a benchmark suite
+// creates a new benchmark suite
 suite([title: string], implementation: function): promise
 ```
 
 ### function implementation(s) {}
 
 ```js
-// creates a bench
+// creates a new benchmark test
 s.bench(title: string, implementation: function)
 ```
 
 ```js
-// creates a burn-in bench
+// creates a burn-in benchmark test
 s.burn(title: string, implementation: function)
 ```
 
 ```js
-// runs between benchmarks
+// runs between benchmarks (place assertions checks here)
 s.cycle(implementation: function)
 ```
 
