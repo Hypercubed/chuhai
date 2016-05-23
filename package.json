@@ -1,6 +1,6 @@
 {
   "name": "chuhai",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Test driven benchmarking.",
   "main": "index.js",
   "scripts": {
