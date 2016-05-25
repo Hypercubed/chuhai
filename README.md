@@ -9,7 +9,7 @@ What's more useless than micro-benchmarks micro-optimization?  Micro-benchmarks 
 ## Features
 
 * Runs alongside multiple assertion libraries and test runners: [node-assert](https://nodejs.org/api/assert.html), [AVA](https://github.com/avajs/ava), [Tape](https://github.com/substack/tape), [blue-tape](https://github.com/spion/blue-tape).
-* Runs in the browser using [browserify](https://github.com/substack/node-browserify), [testling](https://github.com/substack/testling), and  [browser-run](https://github.com/juliangruber/browser-run).
+* Runs in the browser using [browserify](https://github.com/substack/node-browserify), [testling](https://github.com/substack/testling), and [tape-run](https://github.com/juliangruber/tape-run).
 * more...
 
 ## Install
@@ -29,6 +29,7 @@ var assert = require('assert');
 var suite = require('chuhai');
 
 // starts a new benchmark suite
+// note this returns a promise
 suite('array concat', function (s) {
   var arr1 = ['a', 'b', 'c'];
   var arr2 = ['d', 'e', 'f'];
@@ -82,10 +83,12 @@ Chūhai is designed to work well with test runners and assertion libraries such 
 - [Tape](https://github.com/substack/tape) - [example](./test/fixtures/tape)
 - [blue-tape](https://github.com/spion/blue-tape) - [example](./test/fixtures/bluetape)
 
-as well as in-browser runners such as (combined with  [browserify](https://github.com/substack/node-browserify) and node-assert, Tape, or blue-tape):
+as well as in-browser runners such as (combined with  [browserify](https://github.com/substack/node-browserify) and Tape, or blue-tape):
 
 - [testling](https://github.com/substack/testling) - [example](https://github.com/Hypercubed/chuhai/blob/master/package.json#L12)
-- [browser-run](https://github.com/juliangruber/browser-run) - [example](https://github.com/Hypercubed/chuhai/blob/master/package.json#L13)
+- [tape-run](https://github.com/juliangruber/tape-run) - [example](https://github.com/Hypercubed/chuhai/blob/dev/package.json#L12)
+
+*At this time I recommend blue-tape and testling if you plan to run benchmarks in the browser, otherwise AVA.*
 
 **More details coming soon**
 
@@ -93,6 +96,7 @@ as well as in-browser runners such as (combined with  [browserify](https://githu
 
 ```js
 // creates a new benchmark suite
+// returns a promise
 suite([title: string], implementation: function): promise
 ```
 

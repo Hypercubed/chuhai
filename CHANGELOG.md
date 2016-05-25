@@ -3,8 +3,8 @@ CHANGELOG
 
 ## HEAD (Unreleased)
 * Added xburn
-* Added suite.skip
-* Added .failing to experimental wrapper API
+* Added .skip
+* Added .failing
 * Fail benchmarks loudly
 * Add error notice in reporter
 
