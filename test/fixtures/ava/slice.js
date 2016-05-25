@@ -55,7 +55,7 @@ test('array slice - without asserts', () => {
 });
 
 test.failing('array slice - demonstrate a bug', t => {
-  return suite('array slice', s => {
+  return suite('array slice - demonstrate a bug', s => {
     const arr = [1, 2, 3, 4, 5, 6];
     var args = null;
 
@@ -77,6 +77,32 @@ test.failing('array slice - demonstrate a bug', t => {
       args = new Array(l - 1);
       for (let i = 0; i < l; i++) {
         args[i - 1] = arr[i];
+      }
+    });
+  });
+});
+
+test.failing('array slice - demonstrate a error', t => {
+  return suite('array slice - demonstrate a error', s => {
+    s.set('maxTime', 0.01);
+    s.set('minSamples', 10);
+
+    const arr = [1, 2, 3, 4, 5, 6];
+    var args = null;
+
+    s.after(function () {
+      t.deepEqual(arr, [1, 2, 3, 4, 5, 6]);
+    });
+
+    s.bench('Array.prototype.slice', () => {
+      args = Array.prototype.slice.call(arr, 1);
+    });
+
+    s.bench('for loop', () => {
+      const l = arr.length;
+      args = new Array(l - 1);
+      for (let i = 1; i < l; i++) {
+        args[i - 1] = arr[i].value();
       }
     });
   });

@@ -12,6 +12,8 @@ if (typeof window !== 'undefined') {
   window.Benchmark = benchmark;
 }
 
+var fnName = require('fn-name');
+
 /* var reporterKey = process.env.REPORTER || 'plain';
 
 var reporters = {
@@ -23,26 +25,33 @@ var reporter = require('./reporters/plain');
 
 function noop() {}
 
+/* main api */
 exports = module.exports = function (title, fn) {
   if (typeof title === 'function') {
     fn = title;
-    title = '';
+    title = fnName(fn) || '[anonymous]';
   }
-  return new Promise(function (resolve) {
+  return new Promise(function (resolve, reject) {
     createSuite(title, function (b) {
       fn(b);
+      b.error(reject);
       b.run(resolve);
     });
   });
 };
 
+exports.skip = noop;
+exports.failing = noop;
 exports.cb = createSuite;
+
+/* warning, experimental api below */
 
 /* macros supported in next version of ava */
 exports.macro = function (t, fn) {
-  return new Promise(function (resolve) {
+  return new Promise(function (resolve, reject) {
     createSuite(t._test.title, function (b) {
       fn(Object.assign(t, b));
+      b.error(reject);
       b.run(resolve);
     });
   });
@@ -56,27 +65,39 @@ exports.macro.cb = function (t, fn) {
 
 /* wrapper should work in ava or blue-tape */
 exports.wrapper = function (test) {
-  return function wrappedTest(title, fn) {
-    test(title, function (t) {
-      return new Promise(function (resolve) {
-        createSuite(title, function (b) {
-          fn(Object.assign(t, b));
-          b.run(resolve);
+  var wrappedTest = wrapTest(test);
+
+  wrappedTest.failing = test.failing ? wrapTest(test.failing) : noop;
+  wrappedTest.skip = test.skip || noop;
+
+  return wrappedTest;
+
+  function wrapTest(test) {
+    return function wrappedTest(title, fn) {
+      test(title, function (t) {
+        return new Promise(function (resolve, reject) {
+          createSuite(title, function (b) {
+            fn(Object.assign(t, b));
+            b.error(reject);
+            b.run(resolve);
+          });
         });
       });
-    });
-  };
+    };
+  }
 };
 
 /* wrapper should work in tape */
 exports.wrapper.cb = function (test) {
   return function wrappedTest(title, fn) {
     test(title, function (t) {
-      var end = t.end;
+      var _end = t.end;
+      var _error = t.error;
       createSuite(title, function (b) {
         fn(Object.assign(t, b, {
           end: function () {
-            b.run(end);
+            b.run(_end);
+            b.error(_error);
           }
         }));
       });
@@ -109,20 +130,41 @@ function createSuite(title, fn) {
       }, opts));
     },
     xbench: noop,
+    xburn: noop,
     after: function (fn) {
-      suite.on('complete', fn);
+      suite.on('complete', function (ev) {
+        try {
+          fn(ev);
+        } catch (e) {
+          ev.target.error = new Error(String(e));
+          // throw e;
+        }
+      });
     },
     before: function (fn) {
       suite.on('start', fn);
     },
     cycle: function (fn) {
-      suite.on('cycle', fn);
+      suite.on('cycle', function (ev) {
+        try {
+          fn(ev);
+        } catch (e) {
+          ev.target.error = new Error(String(e));
+          // throw e;
+        }
+      });
+    },
+    error: function (fn) {
+      suite.on('error', function (e) {
+        fn(e.target.error);
+      });
     },
     run: function (cb) {
-      cb = cb || noop;
       suite.on('complete', function () {
         reporter(suite);
-        cb();
+        if (cb) {
+          cb();
+        }
       });
       suite.run(opts);
     }

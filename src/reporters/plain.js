@@ -3,6 +3,8 @@ module.exports = function (suite) {
   console.log('## ' + suite.name);
   console.log('');
 
+  var errored = [];
+
   suite
     .sort(function (b, a) {
       a = a.stats;
@@ -10,8 +12,15 @@ module.exports = function (suite) {
       return (a.mean + a.moe > b.mean + b.moe) ? -1 : 1;
     })
     .each(function (b) {
-      var burn = b.options.burn === true ? ' *burn in*' : '';
-      console.log('    ' + String(b) + burn);
+      var m = [String(b)];
+      if (b.error) {
+        errored.push(b);
+        m.push('*error*');
+      }
+      if (b.options.burn) {
+        m.push('*burn in*');
+      }
+      console.log('    ' + m.join(' '));
     });
 
   if (suite.length > 1) {
@@ -29,4 +38,17 @@ module.exports = function (suite) {
   }
 
   console.log('');
+
+  if (errored.length > 0) {
+    errored.forEach(function (b, i) {
+      if (b.error.stack.indexOf('From previous event') > -1) {  // skip errors already caught by ava
+        return;
+      }
+      console.error('```');
+      console.error((i + 1) + '. ' + String(b));
+      console.error(b.error);
+      console.error('```');
+    });
+    console.error('');
+  }
 };

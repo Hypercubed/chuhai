@@ -2,7 +2,11 @@ CHANGELOG
 =========
 
 ## HEAD (Unreleased)
-_(none)_
+* Added xburn
+* Added suite.skip
+* Added .failing to experimental wrapper API
+* Fail benchmarks loudly
+* Add error notice in reporter
 
 --------------------
 
@@ -11,4 +15,3 @@ _(none)_
 
 ## 1.0.0 (2016-05-22)
 _(none)_
-

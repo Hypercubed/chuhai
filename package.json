@@ -9,10 +9,10 @@
     "test:tape": "tape ./test/fixtures/tape/*.js",
     "test:blue": "blue-tape ./test/fixtures/bluetape/*.js",
     "test:assert": "node ./test/fixtures/assert/slice.js && node ./test/fixtures/assert/concat.js",
-    "test:browser-run": "browserify ./test/fixtures/tape/slice.js | browser-run",
-    "test:testling": "browserify ./test/fixtures/tape/slice.js | testling -x open",
+    "test:tape-run": "browserify ./test/fixtures/tape/*.js | tape-run --browser chrome",
+    "test:testling": "browserify ./test/fixtures/tape/*.js | testling -x open",
     "test:node": "npm run test:ava && npm run test:tape && npm run test:blue && npm run test:assert",
-    "test:browsers": "npm run test:browser-run && npm run test:testling",
+    "test:browsers": "npm run test:tape-run && npm run test:testling",
     "version": "chg release -y && git add -A CHANGELOG.md"
   },
   "files": [
@@ -29,6 +29,7 @@
     "nixt": "^0.5.0",
     "phantomjs": "^2.1.7",
     "tape": "^4.5.1",
+    "tape-run": "^2.1.4",
     "testling": "^1.7.1",
     "xo": "^0.15.1",
     "zuul": "^3.10.1"
@@ -48,6 +49,7 @@
   "dependencies": {
     "benchmark": "^2.1.0",
     "bluebird": "^3.4.0",
+    "fn-name": "^2.0.1",
     "lodash": "^4.12.0",
     "microtime": "^2.1.1"
   },
