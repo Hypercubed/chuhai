@@ -19,6 +19,7 @@
     "version": "chg release -y && git add -A CHANGELOG.md"
   },
   "files": [
+    "dist",
     "src"
   ],
   "author": "J. Harshbarger",
