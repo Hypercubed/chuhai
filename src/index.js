@@ -46,7 +46,7 @@ exports.cb = createSuite;
 
 /* warning, experimental api below */
 
-/* macros supported in next version of ava */
+/* macros supported in ava > 0.15.0*/
 exports.macro = function (t, fn) {
   return new Promise(function (resolve, reject) {
     createSuite(t._test.title, function (b) {
@@ -63,7 +63,7 @@ exports.macro.cb = function (t, fn) {
   });
 };
 
-/* wrapper should work in ava or blue-tape */
+/* experimental wrapper should work in ava or blue-tape */
 exports.wrapper = function (test) {
   var wrappedTest = wrapTest(test);
 
@@ -87,7 +87,7 @@ exports.wrapper = function (test) {
   }
 };
 
-/* wrapper should work in tape */
+/* experimental wrapper should work in tape */
 exports.wrapper.cb = function (test) {
   return function wrappedTest(title, fn) {
     test(title, function (t) {
@@ -112,6 +112,7 @@ function createSuite(title, fn) {
   }
 
   var opts = {
+    // we default to sync in the browser
     async: typeof window === 'undefined'
   };
 
@@ -131,18 +132,20 @@ function createSuite(title, fn) {
     },
     xbench: noop,
     xburn: noop,
-    after: function (fn) {
+    complete: function (fn) {
       suite.on('complete', function (ev) {
         try {
           fn(ev);
         } catch (e) {
           ev.target.error = new Error(String(e));
-          // throw e;
         }
       });
     },
-    before: function (fn) {
-      suite.on('start', fn);
+    setup: function (fn) {
+      opts.setup = fn;
+    },
+    teardown: function (fn) {
+      opts.teardown = fn;
     },
     cycle: function (fn) {
       suite.on('cycle', function (ev) {
@@ -150,7 +153,6 @@ function createSuite(title, fn) {
           fn(ev);
         } catch (e) {
           ev.target.error = new Error(String(e));
-          // throw e;
         }
       });
     },
@@ -169,6 +171,10 @@ function createSuite(title, fn) {
       suite.run(opts);
     }
   };
+
+  // aliases
+  api.before = api.start;
+  api.after = api.complete;
 
   fn(api);
 }

@@ -6,10 +6,15 @@ Test driven benchmarking.
 
 What's more useless than micro-benchmarks micro-optimization?  Micro-benchmarks without tests to ensure they are doing what you think they are doing.  I've seen it more that once.  I've done it many times myself.  Chūhai is my attempt to fix that by combining testing and benchmarks.
 
+*Read the [FAQ](https://github.com/Hypercubed/chuhai/wiki/FAQ) for more information*
+
 ## Features
 
-* Runs alongside multiple assertion libraries and test runners: [node-assert](https://nodejs.org/api/assert.html), [AVA](https://github.com/avajs/ava), [Tape](https://github.com/substack/tape), [blue-tape](https://github.com/spion/blue-tape).
-* Runs in the browser using [browserify](https://github.com/substack/node-browserify), [testling](https://github.com/substack/testling), and [tape-run](https://github.com/juliangruber/tape-run).
+* Runs alongside multiple assertion libraries and test runners (see [Test runners/Assertion libraries] below).
+* Runs in the browser (see [Test runners/Assertion libraries] below).
+* By default returns a promise (good for node-tap, blue-tape, and AVA)
+* Supports callbacks (good for tape)
+* No magic globals means no required runner.
 * more...
 
 ## Install
@@ -68,7 +73,9 @@ suite('array concat', function (s) {
 });
 ```
 
-Run using node (or babel-node or tape, see below)
+Run using node, tap, babel-node, or tape
+
+* AVA requires you to use the AVA API *
 
 ```sh
 node bench.js
@@ -79,11 +86,12 @@ node bench.js
 Chūhai is designed to work well with test runners and assertion libraries such as:
 
 - [node-assert](https://nodejs.org/api/assert.html) - [example](./test/fixtures/assert)
+- [node-tap](https://github.com/tapjs/node-tap)
 - [AVA](https://github.com/avajs/ava) - [example](./test/fixtures/ava)
 - [Tape](https://github.com/substack/tape) - [example](./test/fixtures/tape)
 - [blue-tape](https://github.com/spion/blue-tape) - [example](./test/fixtures/bluetape)
 
-as well as in-browser runners such as (combined with  [browserify](https://github.com/substack/node-browserify) and Tape, or blue-tape):
+as well as in-browser runners such as (combined with  [browserify](https://github.com/substack/node-browserify)):
 
 - [testling](https://github.com/substack/testling) - [example](https://github.com/Hypercubed/chuhai/blob/master/package.json#L12)
 - [tape-run](https://github.com/juliangruber/tape-run) - [example](https://github.com/Hypercubed/chuhai/blob/dev/package.json#L12)
