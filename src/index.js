@@ -1,27 +1,26 @@
-'use strict';
-
 /* global window */
 
-var Promise = require('bluebird');
+import process from 'process';
 
-var benchmark = require('benchmark');
+import Promise from 'bluebird';
+import fnName from 'fn-name';
+import _benchmark from 'benchmark';
+
+let benchmark = _benchmark;
+
 if (typeof window !== 'undefined') {
-  var _ = require('lodash');
-  var process = require('process');
-  benchmark = benchmark.runInContext({_: _, process: process});
+  const _ = require('lodash');
+  benchmark = benchmark.runInContext({_, process});
   window.Benchmark = benchmark;
 }
 
-var fnName = require('fn-name');
+const reporterKey = process.env.REPORTER || 'markdown';
 
-/* var reporterKey = process.env.REPORTER || 'plain';
+const reporters = {
+  markdown: require('./reporters/markdown')
+};
 
-var reporters = {
-  plain: require('./reporters/plain'),
-  file: require('./reporters/file')
-}; */
-
-var reporter = require('./reporters/plain');
+const reporter = reporters[reporterKey];
 
 function noop() {}
 
@@ -31,8 +30,8 @@ exports = module.exports = function (title, fn) {
     fn = title;
     title = fnName(fn) || '[anonymous]';
   }
-  return new Promise(function (resolve, reject) {
-    createSuite(title, function (b) {
+  return new Promise((resolve, reject) => {
+    createSuite(title, b => {
       fn(b);
       b.error(reject);
       b.run(resolve);
@@ -48,8 +47,8 @@ exports.cb = createSuite;
 
 /* macros supported in ava > 0.15.0*/
 exports.macro = function (t, fn) {
-  return new Promise(function (resolve, reject) {
-    createSuite(t._test.title, function (b) {
+  return new Promise((resolve, reject) => {
+    createSuite(t._test.title, b => {
       fn(Object.assign(t, b));
       b.error(reject);
       b.run(resolve);
@@ -58,14 +57,14 @@ exports.macro = function (t, fn) {
 };
 
 exports.macro.cb = function (t, fn) {
-  createSuite(t._test.title, function (b) {
+  createSuite(t._test.title, b => {
     fn(Object.assign(t, b));
   });
 };
 
 /* experimental wrapper should work in ava or blue-tape */
 exports.wrapper = function (test) {
-  var wrappedTest = wrapTest(test);
+  const wrappedTest = wrapTest(test);
 
   wrappedTest.failing = test.failing ? wrapTest(test.failing) : noop;
   wrappedTest.skip = test.skip || noop;
@@ -74,9 +73,9 @@ exports.wrapper = function (test) {
 
   function wrapTest(test) {
     return function wrappedTest(title, fn) {
-      test(title, function (t) {
-        return new Promise(function (resolve, reject) {
-          createSuite(title, function (b) {
+      test(title, t => {
+        return new Promise((resolve, reject) => {
+          createSuite(title, b => {
             fn(Object.assign(t, b));
             b.error(reject);
             b.run(resolve);
@@ -90,12 +89,12 @@ exports.wrapper = function (test) {
 /* experimental wrapper should work in tape */
 exports.wrapper.cb = function (test) {
   return function wrappedTest(title, fn) {
-    test(title, function (t) {
-      var _end = t.end;
-      var _error = t.error;
-      createSuite(title, function (b) {
+    test(title, t => {
+      const _end = t.end;
+      const _error = t.error;
+      createSuite(title, b => {
         fn(Object.assign(t, b, {
-          end: function () {
+          end() {
             b.run(_end);
             b.error(_error);
           }
@@ -111,29 +110,29 @@ function createSuite(title, fn) {
     title = '';
   }
 
-  var opts = {
+  const opts = {
     // we default to sync in the browser
     async: typeof window === 'undefined'
   };
 
-  var suite = new benchmark.Suite(title);
+  const suite = new benchmark.Suite(title);
 
-  var api = {
-    set: function (key, value) {
+  const api = {
+    set(key, value) {
       opts[key] = value;
     },
-    bench: function (title, fn) {
+    bench(title, fn) {
       suite.add(title, fn, opts);
     },
-    burn: function (title, fn) {
+    burn(title, fn) {
       suite.add(title, fn, Object.assign({
         burn: true
       }, opts));
     },
     xbench: noop,
     xburn: noop,
-    complete: function (fn) {
-      suite.on('complete', function (ev) {
+    complete(fn) {
+      suite.on('complete', ev => {
         try {
           fn(ev);
         } catch (e) {
@@ -141,14 +140,14 @@ function createSuite(title, fn) {
         }
       });
     },
-    setup: function (fn) {
+    setup(fn) {
       opts.setup = fn;
     },
-    teardown: function (fn) {
+    teardown(fn) {
       opts.teardown = fn;
     },
-    cycle: function (fn) {
-      suite.on('cycle', function (ev) {
+    cycle(fn) {
+      suite.on('cycle', ev => {
         try {
           fn(ev);
         } catch (e) {
@@ -156,13 +155,13 @@ function createSuite(title, fn) {
         }
       });
     },
-    error: function (fn) {
-      suite.on('error', function (e) {
+    error(fn) {
+      suite.on('error', e => {
         fn(e.target.error);
       });
     },
-    run: function (cb) {
-      suite.on('complete', function () {
+    run(cb) {
+      suite.on('complete', () => {
         reporter(suite);
         if (cb) {
           cb();
