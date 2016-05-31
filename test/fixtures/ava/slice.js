@@ -32,7 +32,7 @@ test('array slice', t => {
   });
 });
 
-test('array slice - without asserts', () => {
+test.failing('array slice - without asserts', () => {
   return suite('array slice - without asserts', s => {
     s.set('maxTime', 0.01);
     s.set('minSamples', 10);

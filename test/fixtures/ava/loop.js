@@ -46,7 +46,7 @@ test('array loop', suite.macro, t => {
 });
 
 // this demostrates an actual bug found in benchmarking code
-test.failing('array loop - demonstrate bug', suite.macro, t => {
+test('array loop - demonstrate bug', suite.macro, t => {
   t.set('maxTime', 0.01);
   t.set('minSamples', 10);
 
@@ -80,7 +80,7 @@ test.failing('array loop - demonstrate bug', suite.macro, t => {
   });
 });
 
-test.failing('array loop - demonstrate error', suite.macro, t => {
+test('array loop - demonstrate error', suite.macro, t => {
   t.set('maxTime', 0.01);
   t.set('minSamples', 10);
 

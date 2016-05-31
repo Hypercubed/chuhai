@@ -1,7 +1,7 @@
 import test from 'ava';
 import execa from 'execa';
 
-test('tape-run', t => {
+test.skip('tape-run', t => {
   process.chdir('../');
 
   return execa.shell('browserify ./test/fixtures/bluetape/slice.js | tape-run', {preferLocal: true})
