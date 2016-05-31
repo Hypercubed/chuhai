@@ -62,8 +62,7 @@
     "benchmark": "^2.1.0",
     "bluebird": "^3.4.0",
     "fn-name": "^2.0.1",
-    "lodash": "^4.13.1",
-    "microtime": "^2.1.1"
+    "lodash": "^4.13.1"
   },
   "directories": {
     "test": "test"
