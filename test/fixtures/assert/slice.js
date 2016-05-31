@@ -1,3 +1,5 @@
+/* eslint no-var: "off", prefer-arrow-callback: "off" */
+
 var assert = require('assert');
 var suite = require('../../../');
 
@@ -8,11 +10,11 @@ suite('array slice', function (s) {
   var arr = [1, 2, 3, 4, 5, 6];
   var args = null;
 
-  s.after(() => {
+  s.after(function () {
     assert.deepEqual(arr, [1, 2, 3, 4, 5, 6]);
   });
 
-  s.cycle(() => {
+  s.cycle(function () {
     assert.deepEqual(args, [2, 3, 4, 5, 6]);
     args = null;
   });
@@ -56,11 +58,11 @@ suite.failing('array slice - demonstrate bug', function (s) {
   var arr = [1, 2, 3, 4, 5, 6];
   var args = null;
 
-  s.after(() => {
+  s.after(function () {
     assert.deepEqual(arr, [1, 2, 3, 4, 5, 6]);
   });
 
-  s.cycle(() => {
+  s.cycle(function () {
     assert.deepEqual(args, [2, 3, 4, 5, 6]);
     args = null;
   });

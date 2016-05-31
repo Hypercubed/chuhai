@@ -1,3 +1,5 @@
+/* eslint ava/test-title: "off" */
+
 import test from 'ava';
 import suite from '../../../';
 
@@ -5,8 +7,8 @@ test('array loop', suite.macro, t => {
   t.set('maxTime', 0.01);
   t.set('minSamples', 10);
 
-  var arr = [1, 2, 3, 4, 5, 6];
-  var s = null;
+  const arr = [1, 2, 3, 4, 5, 6];
+  let s = null;
 
   t.cycle(() => {
     t.is(s, 21);
@@ -25,21 +27,21 @@ test('array loop', suite.macro, t => {
 
   t.bench('foo.forEach', () => {
     s = 0;
-    arr.forEach(function (n) {
+    arr.forEach(n => {
       s += n;
     });
   });
 
   t.bench('for i in foo', () => {
     s = 0;
-    for (var i in arr) { /* eslint guard-for-in: 0 */
+    for (const i in arr) { /* eslint guard-for-in: 0 */
       s += arr[i];
     }
   });
 
   t.bench('for count', () => {
     s = 0;
-    for (var i = 0; i < arr.length; i++) {
+    for (let i = 0; i < arr.length; i++) {
       s += arr[i];
     }
   });
@@ -50,8 +52,8 @@ test('array loop - demonstrate bug', suite.macro, t => {
   t.set('maxTime', 0.01);
   t.set('minSamples', 10);
 
-  var arr = [1, 2, 3, 4, 5, 6];
-  var s = null;
+  const arr = [1, 2, 3, 4, 5, 6];
+  let s = null;
 
   t.cycle(() => {
     t.is(s, 21);
@@ -60,21 +62,21 @@ test('array loop - demonstrate bug', suite.macro, t => {
 
   t.bench('foo.forEach', () => {
     s = 0;
-    arr.forEach(function (n) {
+    arr.forEach(n => {
       s += n;
     });
   });
 
   t.bench('for i in foo', () => {
     s = 0;
-    for (var i in arr) {
+    for (const i in arr) {
       s += arr[i];
     }
   });
 
   t.bench('for count', () => {
     s = 0;
-    for (var i = 1; i < arr.length; i++) {
+    for (let i = 1; i < arr.length; i++) {
       s += arr[i];
     }
   });
@@ -84,8 +86,8 @@ test('array loop - demonstrate error', suite.macro, t => {
   t.set('maxTime', 0.01);
   t.set('minSamples', 10);
 
-  var arr = [1, 2, 3, 4, 5, 6];
-  var s = null;
+  const arr = [1, 2, 3, 4, 5, 6];
+  let s = null;
 
   t.burn('max', () => {
     s = 0;
@@ -99,21 +101,21 @@ test('array loop - demonstrate error', suite.macro, t => {
 
   t.bench('foo.forEach', () => {
     s = 0;
-    arr.forEach(function (n) {
+    arr.forEach(n => {
       s += n;
     });
   });
 
   t.bench('for i in foo', () => {
     s = 0;
-    for (var i in arr) { /* eslint guard-for-in: 0 */
+    for (const i in arr) { /* eslint guard-for-in: 0 */
       s += arr[i];
     }
   });
 
   t.bench('for count', () => {
     s = 0;
-    for (var i = 0; i < arr.length; i++) {
+    for (let i = 0; i < arr.length; i++) {
       s += arr[i]();  // arr[i] is not a function
     }
   });

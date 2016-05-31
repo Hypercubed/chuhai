@@ -7,13 +7,13 @@ test('array slice', t => {
     s.set('minSamples', 10);
 
     const arr = [1, 2, 3, 4, 5, 6];
-    var args = null;
+    let args = null;
 
-    s.after(function () {
+    s.after(() => {
       t.deepEqual(arr, [1, 2, 3, 4, 5, 6]);
     });
 
-    s.cycle(function () {
+    s.cycle(() => {
       t.deepEqual(args, [2, 3, 4, 5, 6]);
       args = null;
     });
@@ -38,7 +38,7 @@ test.failing('array slice - without asserts', () => {
     s.set('minSamples', 10);
 
     const arr = [1, 2, 3, 4, 5, 6];
-    var args = null;
+    let args = null;
 
     s.bench('Array.prototype.slice', () => {
       args = Array.prototype.slice.call(arr, 1);
@@ -57,13 +57,13 @@ test.failing('array slice - without asserts', () => {
 test.failing('array slice - demonstrate a bug', t => {
   return suite('array slice - demonstrate a bug', s => {
     const arr = [1, 2, 3, 4, 5, 6];
-    var args = null;
+    let args = null;
 
-    s.after(function () {
+    s.after(() => {
       t.deepEqual(arr, [1, 2, 3, 4, 5, 6]);
     });
 
-    s.cycle(function () {
+    s.cycle(() => {
       t.deepEqual(args, [2, 3, 4, 5, 6]);
       args = null;
     });
@@ -88,9 +88,9 @@ test.failing('array slice - demonstrate a error', t => {
     s.set('minSamples', 10);
 
     const arr = [1, 2, 3, 4, 5, 6];
-    var args = null;
+    let args = null;
 
-    s.after(function () {
+    s.after(() => {
       t.deepEqual(arr, [1, 2, 3, 4, 5, 6]);
     });
 
