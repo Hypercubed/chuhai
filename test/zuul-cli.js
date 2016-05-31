@@ -1,18 +1,16 @@
 import test from 'ava';
-import nixt from 'nixt';
+import execa from 'execa';
 
-test.skip.cb('tape-run', t => {
-  nixt({colors: false})
-    .cwd('..')
-    .expect(result => {
-      t.is(result.code, 0);
+test.skip('zuul', t => {
+  process.chdir('../');
+
+  return execa.shell('zuul --ui tape --phantom -- ./test/fixtures/assert/concat.js', {preferLocal: true})
+    .then(result => {
       t.regex(result.stdout, /TAP version/);
       t.regex(result.stdout, /# tests 3/);
       t.regex(result.stdout, /# pass {2}3/);
       t.regex(result.stdout, /## array slice/);
       t.regex(result.stdout, /## array slice - without asserts/);
       t.regex(result.stdout, /\*Fastest is __for loop__\*/);
-    })
-    .run('./node_modules/.bin/browserify ./test/fixtures/bluetape/slice.js | ./node_modules/.bin/tape-run --browser chrome')
-    .end(t.end);
+    });
 });

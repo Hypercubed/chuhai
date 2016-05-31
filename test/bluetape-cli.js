@@ -1,18 +1,16 @@
 import test from 'ava';
-import nixt from 'nixt';
+import execa from 'execa';
 
-test.cb('tape', t => {
-  nixt({colors: false})
-    .cwd('..')
-    .expect(result => {
-      t.is(result.code, 0);
+test('blue-tape', t => {
+  process.chdir('../');
+
+  return execa('blue-tape', ['./test/fixtures/bluetape/slice.js'], {preferLocal: true})
+    .then(result => {
       t.regex(result.stdout, /TAP version/);
       t.regex(result.stdout, /# tests 3/);
       t.regex(result.stdout, /# pass {2}3/);
       t.regex(result.stdout, /## array slice/);
       t.regex(result.stdout, /## array slice - without asserts/);
       t.regex(result.stdout, /\*Fastest is __for loop__\*/);
-    })
-    .run('node ./test/fixtures/tape/slice.js')
-    .end(t.end);
+    });
 });
