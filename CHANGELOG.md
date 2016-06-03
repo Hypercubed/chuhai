@@ -2,9 +2,12 @@ CHANGELOG
 =========
 
 ## HEAD (Unreleased)
-* Fix: cycle should pass event to callback
+_(none)_
 
 --------------------
+
+## 1.1.1 (2016-06-03)
+* Fix: cycle should pass event to callback
 
 ## 1.1.0 (2016-06-03)
 * Added .xburn
