@@ -2,14 +2,14 @@ CHANGELOG
 =========
 
 ## HEAD (Unreleased)
-_(none)_
+* Fix: cycle should pass event to callback
 
 --------------------
 
 ## 1.1.0 (2016-06-03)
 * Added .xburn
-* Added .skip
-* Added .failing
+* Added suite.skip
+* Added suite.failing
 * Fail benchmarks loudly
 * Add error notice in reporter
 * Added options override for bench and burn

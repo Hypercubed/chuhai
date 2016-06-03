@@ -169,14 +169,10 @@ function createSuite(suiteTitle, fn) {
     cycle(fn) {
       debug('adding cycle callback > %s', suiteTitle);
       suite.on('cycle', ev => {
-        // trying to catch asserts that don't throw
+        // try to catch asserts that don't throw
         // power-asserts return null when failed, undefined when passed
         try {
-          fn(/* _ => {
-            if (typeof _ !== 'undefined') {
-              ev.target.error = new Error(String('Assertion Error'));
-            }
-          } */);
+          fn(ev);
         } catch (e) {
           ev.target.error = new Error(String(e));
         }
