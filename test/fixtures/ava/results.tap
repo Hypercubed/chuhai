@@ -1,0 +1,136 @@
+TAP version 13
+# type › isArray - demostrate error
+ok 1 - type › isArray - demostrate error
+## isArray - demostrate error
+
+    Array.isArray:  *error*
+    InstanceOf x 43,170,025 ops/sec ±289.19% (2 runs sampled)
+    Object.prototype.toString.call x 946,267 ops/sec ±25.28% (2 runs sampled)
+
+*Fastest is __InstanceOf__*
+
+## isArray - demostrate bug
+
+    InstanceOf x 44,909,045 ops/sec ±288.80% (2 runs sampled)
+    Array.isArray x 20,286,249 ops/sec ±89.81% (2 runs sampled)
+    Object.prototype.toString.call x 1,268,658 ops/sec ±116.03% (2 runs sampled)
+
+*Fastest is __InstanceOf__*
+
+# type › isArray - demostrate bug
+ok 2 - type › isArray - demostrate bug
+## array concat
+
+    for loop x 11,641,558 ops/sec ±14.27% (10 runs sampled)
+    concat x 1,147,052 ops/sec ±13.60% (10 runs sampled)
+
+*Fastest is __for loop__*
+
+# concat › array concat
+ok 3 - concat › array concat
+## array slice - demonstrate an error
+
+    for loop:  *error*
+    Array.prototype.slice x 4,071,729 ops/sec ±24.85% (10 runs sampled)
+
+*Fastest is __Array.prototype.slice__*
+
+# slice › array slice - demonstrate an error
+ok 4 - slice › array slice - demonstrate an error
+## isArray
+
+    InstanceOf x 51,429,846 ops/sec ±10.75% (10 runs sampled)
+    Array.isArray x 17,069,116 ops/sec ±11.53% (10 runs sampled)
+    Object.prototype.toString.call x 1,058,505 ops/sec ±28.64% (10 runs sampled)
+
+*Fastest is __InstanceOf__*
+
+# type › isArray
+ok 5 - type › isArray
+## timeouts - demonstrate bug
+
+    max x 6,205,671 ops/sec ±13.15% (10 runs sampled) *burn in*
+    setImmediate x 322,669 ops/sec ±12.43% (10 runs sampled)
+    setTimeout x 576 ops/sec ±36.94% (10 runs sampled)
+    nextTick x 135 ops/sec ±226.10% (10 runs sampled)
+
+*Fastest is __setImmediate, nextTick__*
+
+# async › timeouts - demonstrate bug
+ok 6 - async › timeouts - demonstrate bug
+## timeouts
+
+    max x 5,479,550 ops/sec ±35.51% (10 runs sampled) *burn in*
+    nextTick x 1,922,051 ops/sec ±32.69% (10 runs sampled)
+    setImmediate x 310,457 ops/sec ±13.51% (10 runs sampled)
+    setTimeout x 689 ops/sec ±2.94% (10 runs sampled)
+
+*Fastest is __nextTick__*
+
+# async › timeouts
+ok 7 - async › timeouts
+## array slice - without asserts
+
+    for loop x 18,576,410 ops/sec ±14.52% (10 runs sampled)
+    Array.prototype.slice x 3,219,344 ops/sec ±24.38% (10 runs sampled)
+
+*Fastest is __for loop__*
+
+# slice › array slice - without asserts
+ok 8 - slice › array slice - without asserts
+## array slice
+
+    for loop x 21,055,236 ops/sec ±10.29% (10 runs sampled)
+    Array.prototype.slice x 3,096,316 ops/sec ±25.76% (10 runs sampled)
+
+*Fastest is __for loop__*
+
+# slice › array slice
+ok 9 - slice › array slice
+## array loop - demonstrate error
+
+    for count:  *error*
+    max x 22,766,467 ops/sec ±19.85% (10 runs sampled) *burn in*
+    foo.forEach x 4,020,152 ops/sec ±21.60% (10 runs sampled)
+    for i in foo x 314,910 ops/sec ±10.90% (10 runs sampled)
+
+*Fastest is __foo.forEach__*
+
+## array loop - demonstrate bug
+
+    for count x 32,223,990 ops/sec ±7.52% (10 runs sampled)
+    foo.forEach x 3,194,670 ops/sec ±27.05% (10 runs sampled)
+    for i in foo x 243,920 ops/sec ±12.50% (10 runs sampled)
+
+*Fastest is __for count__*
+
+# loop › array loop - demonstrate error
+ok 10 - loop › array loop - demonstrate error
+# loop › array loop - demonstrate bug
+ok 11 - loop › array loop - demonstrate bug
+## array loop
+
+    max x 26,211,339 ops/sec ±12.57% (10 runs sampled) *burn in*
+    for count x 25,863,068 ops/sec ±32.93% (10 runs sampled)
+    foo.forEach x 5,034,718 ops/sec ±11.86% (10 runs sampled)
+    for i in foo x 323,687 ops/sec ±12.38% (10 runs sampled)
+
+*Fastest is __for count__*
+
+# loop › array loop
+ok 12 - loop › array loop
+## array slice - demonstrate a bug
+
+    Array.prototype.slice x 5,084,678 ops/sec ±8.20% (59 runs sampled)
+    for loop x 2,442,928 ops/sec ±2.30% (73 runs sampled)
+
+*Fastest is __Array.prototype.slice__*
+
+# slice › array slice - demonstrate a bug
+ok 13 - slice › array slice - demonstrate a bug
+
+1..13
+# tests 13
+# pass 13
+# fail 0
+

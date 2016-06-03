@@ -51,7 +51,7 @@ suite('array slice - without asserts', function (s) {
   });
 });
 
-suite.failing('array slice - demonstrate bug', function (s) {
+suite('array slice - demonstrate bug', function (s) {
   s.set('maxTime', 0.01);
   s.set('minSamples', 10);
 

@@ -7,8 +7,8 @@ suite('isArray', t => {
   t.set('maxTime', 0.01);
   t.set('minSamples', 10);
 
-  var arr = [];
-  var isArray = null;
+  const arr = [];
+  let isArray = null;
 
   t.cycle(() => {
     t.truthy(isArray);
@@ -31,8 +31,8 @@ suite.failing('isArray - demostrate bug', t => {
   t.set('maxTime', 0.01);
   t.set('minSamples', 2);
 
-  var arr = [];
-  var isArray = null;
+  const arr = [];
+  let isArray = null;
 
   t.cycle(() => {
     t.truthy(isArray);
@@ -55,8 +55,8 @@ suite.failing('isArray - demostrate error', t => {
   t.set('maxTime', 0.01);
   t.set('minSamples', 2);
 
-  var arr = [];
-  var isArray = null;
+  const arr = [];
+  let isArray = null;
 
   /* t.cycle(() => {
     t.truthy(isArray);

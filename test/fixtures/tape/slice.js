@@ -59,7 +59,7 @@ test('array slice - without asserts', function (t) {
   });
 });
 
-test.skip('array slice - demonstrate bug', function (t) {
+test('array slice - demonstrate bug', function (t) {
   suite('array slice - demonstrate bug', function (s) {
     s.set('maxTime', 0.01);
     s.set('minSamples', 10);

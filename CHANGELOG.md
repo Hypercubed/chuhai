@@ -2,11 +2,13 @@ CHANGELOG
 =========
 
 ## HEAD (Unreleased)
-* Added xburn
+* Added .xburn
 * Added .skip
 * Added .failing
 * Fail benchmarks loudly
 * Add error notice in reporter
+* Added options override for bench and burn
+* Cleaner stack traces
 
 --------------------
 

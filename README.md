@@ -86,15 +86,21 @@ node bench.js
 Chūhai is designed to work well with test runners and assertion libraries such as:
 
 - [node-assert](https://nodejs.org/api/assert.html) - [example](./test/fixtures/assert)
-- [node-tap](https://github.com/tapjs/node-tap)
-- [AVA](https://github.com/avajs/ava) - [example](./test/fixtures/ava)
-- [Tape](https://github.com/substack/tape) - [example](./test/fixtures/tape)
-- [blue-tape](https://github.com/spion/blue-tape) - [example](./test/fixtures/bluetape)
+- [tapjs/node-tap](https://github.com/tapjs/node-tap)
+- [avajs/ava](https://github.com/avajs/ava) - [example](./test/fixtures/ava)
+- [substack/tape](https://github.com/substack/tape) - [example](./test/fixtures/tape)
+- [spion/blue-tape](https://github.com/spion/blue-tape) - [example](./test/fixtures/bluetape)
 
-as well as in-browser runners such as (combined with  [browserify](https://github.com/substack/node-browserify)):
+as well as in-browser runners such as (combined with  [substack/node-browserify](https://github.com/substack/node-browserify)):
 
-- [testling](https://github.com/substack/testling) - [example](https://github.com/Hypercubed/chuhai/blob/master/package.json#L12)
-- [tape-run](https://github.com/juliangruber/tape-run) - [example](https://github.com/Hypercubed/chuhai/blob/dev/package.json#L12)
+- [substack/testling](https://github.com/substack/testling) - [example](https://github.com/Hypercubed/chuhai/blob/master/package.json#L12)
+- [juliangruber/tape-run](https://github.com/juliangruber/tape-run) - [example](https://github.com/Hypercubed/chuhai/blob/dev/package.json#L12)
+
+also works well with:
+
+- [Hypercubed/grunion](https://github.com/Hypercubed/grunion)
+- [zoubin/tap-summary](https://github.com/zoubin/tap-summary)
+- [Hypercubed/tap-markdown](https://github.com/Hypercubed/tap-markdown)
 
 *At this time I recommend blue-tape and testling if you plan to run benchmarks in the browser, otherwise AVA.*
 

@@ -1,4 +1,6 @@
-var tape = require('blue-tape');
+/* eslint no-var: "off", prefer-arrow-callback: "off" */
+
+var tape = require('tape');
 var test = require('../../../').wrapper.cb(tape);
 
 test('isArray', t => {

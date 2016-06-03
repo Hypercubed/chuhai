@@ -1,3 +1,5 @@
+/* eslint no-var: "off", prefer-arrow-callback: "off" */
+
 var assert = require('assert');
 var suite = require('../../../');
 

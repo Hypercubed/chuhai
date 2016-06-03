@@ -12,15 +12,10 @@
     "pretest": "npm run build && xo",
     "test": "ava",
     "prepublish": "npm run build",
+    "build:maps": "babel src -d dist --source-maps inline",
+    "coverage": "npm run build:maps && nyc --reporter=lcov -- ava",
     "version": "chg release -y && git add -A CHANGELOG.md",
-    "test:ava": "ava ./test/fixtures/ava/*.js",
-    "test:tape": "tape ./test/fixtures/tape/*.js",
-    "test:blue": "blue-tape ./test/fixtures/bluetape/*.js",
-    "test:assert": "node ./test/fixtures/assert/slice.js && node ./test/fixtures/assert/concat.js",
-    "test:tape-run": "browserify ./test/fixtures/tape/*.js | tape-run --browser chrome",
-    "test:testling": "browserify ./test/fixtures/tape/*.js | testling -x open",
-    "test:node": "npm run test:ava && npm run test:tape && npm run test:blue && npm run test:assert",
-    "test:browsers": "npm run test:tape-run && npm run test:testling"
+    "start": "package-scripts"
   },
   "files": [
     "dist",
@@ -32,11 +27,16 @@
     "ava": "^0.15.1",
     "babel-cli": "^6.9.0",
     "babel-preset-es2015": "^6.9.0",
+    "babel-preset-stage-2": "^6.5.0",
     "blue-tape": "^0.2.0",
     "browserify": "^13.0.1",
     "chg": "^0.3.2",
     "execa": "^0.4.0",
+    "grunion": "^1.1.0",
+    "nyc": "^6.4.4",
+    "p-s": "^1.0.1",
     "rimraf": "^2.5.2",
+    "setimmediate": "^1.0.4",
     "tape": "^4.5.1",
     "tape-run": "^2.1.4",
     "testling": "^1.7.1",
@@ -59,8 +59,10 @@
   "dependencies": {
     "benchmark": "^2.1.0",
     "bluebird": "^3.4.0",
+    "debug": "^2.2.0",
     "fn-name": "^2.0.1",
-    "lodash": "^4.13.1"
+    "lodash": "^4.13.1",
+    "stack-utils": "^0.4.0"
   },
   "directories": {
     "test": "test"

@@ -32,7 +32,7 @@ test('array slice', t => {
   });
 });
 
-test.failing('array slice - without asserts', () => {
+test('array slice - without asserts', () => {
   return suite('array slice - without asserts', s => {
     s.set('maxTime', 0.01);
     s.set('minSamples', 10);
@@ -82,8 +82,8 @@ test.failing('array slice - demonstrate a bug', t => {
   });
 });
 
-test.failing('array slice - demonstrate a error', t => {
-  return suite('array slice - demonstrate a error', s => {
+test.failing('array slice - demonstrate an error', t => {
+  return suite('array slice - demonstrate an error', s => {
     s.set('maxTime', 0.01);
     s.set('minSamples', 10);
 

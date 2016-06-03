@@ -1,3 +1,5 @@
+/* eslint no-var: "off", prefer-arrow-callback: "off" */
+
 var test = require('tape');
 var suite = require('../../../').cb;
 

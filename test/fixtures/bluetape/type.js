@@ -1,3 +1,5 @@
+/* eslint no-var: "off", prefer-arrow-callback: "off" */
+
 var tape = require('blue-tape');
 var suite = require('../../../');
 

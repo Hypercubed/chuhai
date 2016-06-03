@@ -55,8 +55,8 @@ test('array slice - without asserts', function () {
   });
 });
 
-test.skip('array slice - demostrate bug', function (t) {
-  return suite('array slice', function (s) {
+test('array slice - demonstrate bug', function (t) {
+  return suite('array slice - demonstrate bug', function (s) {
     s.set('maxTime', 0.01);
     s.set('minSamples', 10);
 
@@ -86,8 +86,8 @@ test.skip('array slice - demostrate bug', function (t) {
   });
 });
 
-test.skip('array slice - demostrate error', function () {
-  return suite('array slice', function (s) {
+test('array slice - demonstrate error', function () {
+  return suite('array slice - demonstrate error', function (s) {
     s.set('maxTime', 0.01);
     s.set('minSamples', 10);
 

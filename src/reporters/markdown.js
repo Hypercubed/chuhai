@@ -1,3 +1,4 @@
+const StackUtils = require('stack-utils');
 
 module.exports = function (suite) {
   console.log(`## ${suite.name}`);
@@ -38,11 +39,36 @@ module.exports = function (suite) {
       if (b.error.stack.indexOf('From previous event') > -1) {  // skip errors already caught by ava
         return;
       }
-      console.error('```');
-      console.error(`${(i + 1)}. ${String(b)}`);
-      console.error(b.error);
-      console.error('```');
+      console.log('```');
+      console.log(`${(i + 1)}. ${String(b)} ${prettyStack(b.error.stack)}`);
+      console.log('```');
+      console.error('');
     });
-    console.error('');
   }
 };
+
+const chuhaiInternals = /\/chuhai\/dist\//;
+const chuhaiDependencies = /\/node_modules\/(?:bluebird|benchmark|lodash)\//;
+
+const stackUtils = new StackUtils({
+  cwd: process.cwd(),
+  internals: [
+    chuhaiInternals,
+    chuhaiDependencies
+  ]});
+
+function prettyStack(stack) {
+  if (!stack) {
+    return '';
+  }
+
+  const title = stack.split('\n')[0];
+  const lines = stackUtils
+    .clean(stack)
+    .split('\n')
+    .filter(s => s.length > 0)
+    .map(s => `    at ${s}`)
+    .join('\n');
+
+  return `${title}\n${lines}`;
+}

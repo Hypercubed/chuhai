@@ -1,18 +1,22 @@
 /* global window */
 
-import process from 'process';
+const Promise = require('bluebird');
+const fnName = require('fn-name');
+const debug = require('debug')('chuhai');
 
-import Promise from 'bluebird';
-import fnName from 'fn-name';
-import _benchmark from 'benchmark';
+// require('loud-rejection/api')(process);
 
-let benchmark = _benchmark;
+let benchmark = require('benchmark');
 
+/* istanbul ignore next */
 if (typeof window !== 'undefined') {
   const _ = require('lodash');
+  const process = require('process');
   benchmark = benchmark.runInContext({_, process});
   window.Benchmark = benchmark;
 }
+
+// Promise.longStackTraces();
 
 const reporterKey = process.env.REPORTER || 'markdown';
 
@@ -24,6 +28,15 @@ const reporter = reporters[reporterKey];
 
 function noop() {}
 
+// maybe usefull later
+// check if the test is being run in AVA cli
+// const isAva = typeof process.send === 'function';
+// const ava = isAva ? require('ava/api') : undefined;
+
+// process.on('message', message => {
+//   debug('message ->', message);
+// });
+
 /* main api */
 exports = module.exports = function (title, fn) {
   if (typeof title === 'function') {
@@ -32,8 +45,8 @@ exports = module.exports = function (title, fn) {
   }
   return new Promise((resolve, reject) => {
     createSuite(title, b => {
-      fn(b);
       b.error(reject);
+      fn(b);
       b.run(resolve);
     });
   });
@@ -104,34 +117,40 @@ exports.wrapper.cb = function (test) {
   };
 };
 
-function createSuite(title, fn) {
-  if (typeof title === 'function') {
-    fn = title;
-    title = '';
+/* internal */
+function createSuite(suiteTitle, fn) {
+  if (typeof suiteTitle === 'function') {
+    fn = suiteTitle;
+    suiteTitle = fnName(fn) || '[anonymous]';
   }
 
-  const opts = {
+  debug('create suite > %s', suiteTitle);
+
+  const defaultOpts = {
     // we default to sync in the browser
     async: typeof window === 'undefined'
   };
 
-  const suite = new benchmark.Suite(title);
+  const suite = new benchmark.Suite(suiteTitle);
 
   const api = {
     set(key, value) {
-      opts[key] = value;
+      defaultOpts[key] = value;
     },
-    bench(title, fn) {
+    bench(title, fn, opts) {
+      opts = {...defaultOpts, ...opts};
+      debug('adding bench > %s > %s', suiteTitle, title);
       suite.add(title, fn, opts);
     },
-    burn(title, fn) {
-      suite.add(title, fn, Object.assign({
-        burn: true
-      }, opts));
+    burn(title, fn, opts) {
+      opts = {...defaultOpts, ...opts, burn: true};
+      debug('adding burn > %s > %s', suiteTitle, title);
+      suite.add(title, fn, opts);
     },
     xbench: noop,
     xburn: noop,
     complete(fn) {
+      debug('adding completed callback > %s', suiteTitle);
       suite.on('complete', ev => {
         try {
           fn(ev);
@@ -140,39 +159,62 @@ function createSuite(title, fn) {
         }
       });
     },
-    setup(fn) {
+    // these don't work as expected
+    /* setup(fn) {
       opts.setup = fn;
     },
     teardown(fn) {
       opts.teardown = fn;
-    },
+    }, */
     cycle(fn) {
+      debug('adding cycle callback > %s', suiteTitle);
       suite.on('cycle', ev => {
+        // trying to catch asserts that don't throw
+        // power-asserts return null when failed, undefined when passed
         try {
-          fn(ev);
+          fn(/* _ => {
+            if (typeof _ !== 'undefined') {
+              ev.target.error = new Error(String('Assertion Error'));
+            }
+          } */);
         } catch (e) {
           ev.target.error = new Error(String(e));
         }
       });
     },
     error(fn) {
-      suite.on('error', e => {
-        fn(e.target.error);
+      debug('adding error callback > %s', suiteTitle);
+      suite.on('error', ev => {
+        fn(ev.target.error);
       });
     },
     run(cb) {
+      /* istanbul ignore next */
+      if (debug.enabled) {
+        debug('started > %s', suiteTitle);
+
+        suite.on('cycle', e => {
+          debug('cycled after > %s >  %s', suiteTitle, e.target.name);
+        });
+
+        suite.on('error', e => {
+          debug('errored after > %s > %s', suiteTitle, e.target.name);
+        });
+      }
+
       suite.on('complete', () => {
+        debug('completed > %s', suiteTitle);
         reporter(suite);
         if (cb) {
           cb();
         }
       });
-      suite.run(opts);
+
+      suite.run(defaultOpts);
     }
   };
 
   // aliases
-  api.before = api.start;
   api.after = api.complete;
 
   fn(api);
