@@ -2,6 +2,13 @@
 
 Test driven benchmarking.
 
+[![version](https://img.shields.io/npm/v/chuhai.svg)](https://www.npmjs.org/package/chuhai)
+[![status](https://travis-ci.org/Hypercubed/chuhai.svg)](https://travis-ci.org/Hypercubed/chuhai)
+[![coverage](https://img.shields.io/coveralls/Hypercubed/chuhai.svg)](https://coveralls.io/github/Hypercubed/chuhai)
+[![dependencies](https://david-dm.org/Hypercubed/chuhai.svg)](https://david-dm.org/Hypercubed/chuhai)
+[![devDependencies](https://david-dm.org/Hypercubed/chuhai/dev-status.svg)](https://david-dm.org/Hypercubed/chuhai#info=devDependencies)
+![node](https://img.shields.io/node/v/chuhai.svg)
+
 ## Why Chūhai?
 
 What's more useless than micro-benchmarks micro-optimization?  Micro-benchmarks without tests to ensure they are doing what you think they are doing.  I've seen it more that once.  I've done it many times myself.  Chūhai is my attempt to fix that by combining testing and benchmarks.
