@@ -2,9 +2,12 @@ CHANGELOG
 =========
 
 ## HEAD (Unreleased)
-* Don't print suite name if blank
+_(none)_
 
 --------------------
+
+## 1.2.0 (2016-06-15)
+* Don't print suite name if blank
 
 ## 1.1.1 (2016-06-03)
 * Fix: cycle should pass event to callback
