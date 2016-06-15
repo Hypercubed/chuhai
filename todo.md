@@ -12,3 +12,4 @@ _\( managed using [todo-md](https://github.com/Hypercubed/todo-md) \)_
 - [ ] Reporters
 - [ ] Don't show errors twice when using promises
 - [ ] Add runner
+- [ ] Do pre-run to check for errors before full bench

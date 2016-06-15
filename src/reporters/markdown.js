@@ -1,7 +1,9 @@
 const StackUtils = require('stack-utils');
 
 module.exports = function (suite) {
-  console.log(`## ${suite.name}`);
+  if (suite.name && suite.name.length !== 0) {
+    console.log(`## ${suite.name}`);
+  }
   console.log('');
 
   const errored = [];
