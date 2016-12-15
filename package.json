@@ -5,12 +5,15 @@
   "main": "index.js",
   "browser": "dist/index.js",
   "jsnext:main": "src/index.js",
+  "engines": {
+    "node": ">=0.12"
+  },
   "scripts": {
     "clean": "rimraf dist",
     "prebuild": "npm run clean",
     "build": "babel src -d dist",
     "pretest": "npm run build && xo",
-    "test": "ava",
+    "test": "xo && ava",
     "prepublish": "npm run build",
     "build:maps": "babel src -d dist --source-maps inline",
     "coverage": "npm run build:maps && nyc --reporter=lcov -- ava",
@@ -21,10 +24,39 @@
     "dist",
     "src"
   ],
-  "author": "J. Harshbarger",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Hypercubed/chuhai.git"
+  },
+  "homepage": "https://github.com/Hypercubed/chuhai#readme",
+  "bugs": {
+    "url": "https://github.com/Hypercubed/chuhai/issues"
+  },
+  "author": "J. Harshbarger",
+  "keywords": [
+    "benchmark",
+    "bench",
+    "performance",
+    "speed",
+    "test",
+    "tape",
+    "ava",
+    "tap",
+    "assert",
+    "promise",
+    "futuristic"
+  ],
+  "dependencies": {
+    "benchmark": "^2.1.0",
+    "bluebird": "^3.4.1",
+    "debug": "^2.2.0",
+    "fn-name": "^2.0.1",
+    "lodash": "^4.13.1",
+    "stack-utils": "^0.4.0"
+  },
   "devDependencies": {
-    "ava": "^0.15.1",
+    "ava": "*",
     "babel-cli": "^6.9.0",
     "babel-preset-es2015": "^6.9.0",
     "babel-preset-stage-2": "^6.5.0",
@@ -40,7 +72,7 @@
     "tape": "^4.5.1",
     "tape-run": "^2.1.4",
     "testling": "^1.7.1",
-    "xo": "^0.15.1",
+    "xo": "*",
     "zuul": "^3.10.1"
   },
   "xo": {
@@ -56,39 +88,7 @@
       "ava/no-unknown-modifiers": 0
     }
   },
-  "dependencies": {
-    "benchmark": "^2.1.0",
-    "bluebird": "^3.4.0",
-    "debug": "^2.2.0",
-    "fn-name": "^2.0.1",
-    "lodash": "^4.13.1",
-    "stack-utils": "^0.4.0"
-  },
-  "engines": {
-    "node": ">=0.12"
-  },
   "directories": {
     "test": "test"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/Hypercubed/chuhai.git"
-  },
-  "keywords": [
-    "benchmark",
-    "bench",
-    "performance",
-    "speed",
-    "test",
-    "tape",
-    "ava",
-    "tap",
-    "assert",
-    "promise",
-    "futuristic"
-  ],
-  "bugs": {
-    "url": "https://github.com/Hypercubed/chuhai/issues"
-  },
-  "homepage": "https://github.com/Hypercubed/chuhai#readme"
+  }
 }
