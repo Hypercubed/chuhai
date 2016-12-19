@@ -58,7 +58,7 @@ exports.cb = createSuite;
 
 /* warning, experimental api below */
 
-/* macros supported in ava > 0.15.0*/
+/* macros supported in ava > 0.15.0 */
 exports.macro = function (t, fn) {
   return new Promise((resolve, reject) => {
     createSuite(t._test.title, b => {
@@ -85,7 +85,7 @@ exports.wrapper = function (test) {
   return wrappedTest;
 
   function wrapTest(test) {
-    return function wrappedTest(title, fn) {
+    return function (title, fn) {
       test(title, t => {
         return new Promise((resolve, reject) => {
           createSuite(title, b => {
@@ -101,7 +101,7 @@ exports.wrapper = function (test) {
 
 /* experimental wrapper should work in tape */
 exports.wrapper.cb = function (test) {
-  return function wrappedTest(title, fn) {
+  return function (title, fn) {
     test(title, t => {
       const _end = t.end;
       const _error = t.error;
@@ -154,8 +154,8 @@ function createSuite(suiteTitle, fn) {
       suite.on('complete', ev => {
         try {
           fn(ev);
-        } catch (e) {
-          ev.target.error = new Error(String(e));
+        } catch (err) {
+          ev.target.error = new Error(String(err));
         }
       });
     },
@@ -173,8 +173,8 @@ function createSuite(suiteTitle, fn) {
         // power-asserts return null when failed, undefined when passed
         try {
           fn(ev);
-        } catch (e) {
-          ev.target.error = new Error(String(e));
+        } catch (err) {
+          ev.target.error = new Error(String(err));
         }
       });
     },

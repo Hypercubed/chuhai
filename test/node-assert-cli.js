@@ -1,7 +1,7 @@
 import test from 'ava';
 import execa from 'execa';
 
-process.chdir('../');
+// process.chdir('../');
 
 test('node-assert - concat', async t => {
   const result = await execa('node', ['./test/fixtures/bluetape/concat.js'], {preferLocal: true});

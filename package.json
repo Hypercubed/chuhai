@@ -56,7 +56,7 @@
     "stack-utils": "^0.4.0"
   },
   "devDependencies": {
-    "ava": "*",
+    "ava": "^0.17.0",
     "babel-cli": "^6.9.0",
     "babel-preset-es2015": "^6.9.0",
     "babel-preset-stage-2": "^6.5.0",
@@ -72,7 +72,7 @@
     "tape": "^4.5.1",
     "tape-run": "^2.1.4",
     "testling": "^1.7.1",
-    "xo": "*",
+    "xo": "^0.17.1",
     "zuul": "^3.10.1"
   },
   "xo": {

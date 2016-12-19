@@ -76,7 +76,7 @@ test.failing('array slice - demonstrate a bug', t => {
       const l = arr.length;
       args = new Array(l - 1);
       for (let i = 0; i < l; i++) {
-        args[i - 1] = arr[i];
+        args[i] = arr[i];
       }
     });
   });
