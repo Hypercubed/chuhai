@@ -5,6 +5,7 @@
   "main": "index.js",
   "browser": "dist/index.js",
   "jsnext:main": "src/index.js",
+  "typings": "index.d.ts",
   "scripts": {
     "clean": "rimraf dist",
     "prebuild": "npm run clean",
